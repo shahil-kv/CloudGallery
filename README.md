@@ -56,7 +56,7 @@ This fork adds a native **iOS app** (Swift/SwiftUI) in [`ios/`](ios/). It signs 
 
 Setup and installation (SideStore / AltStore / Sideloadly) are in **[ios/README.md](ios/README.md)**. The design is documented in [docs/](docs/): [architecture](docs/ARCHITECTURE.md), [cloud format](docs/CLOUD_FORMAT.md), [upstream issues analysis](docs/ISSUES-ANALYSIS.md). Unsigned `.ipa` builds are on the [Releases](https://github.com/shahil-kv/CloudGallery/releases) page.
 
-![iOS timeline (screenshot placeholder)](docs/screenshots/ios-timeline.png)
+> 📸 iOS screenshots: placeholder; they will be added after on-device testing.
 
 The iOS app is based on the original projects **[AKS-Labs/CloudGallery](https://github.com/AKS-Labs/CloudGallery)** (Android) and **[Whitehole](https://github.com/beradeep/whitehole/)**, and is licensed under the same **GPL-3.0**.
 
