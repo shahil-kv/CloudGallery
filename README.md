@@ -47,14 +47,16 @@
 
 ## 🍏 iOS app (new)
 
-This fork adds a native **iOS app** written in Swift/SwiftUI, in the [`ios/`](ios/) folder. It does the same job as the Android app and adds:
+This fork adds a native **iOS app** (Swift/SwiftUI) in [`ios/`](ios/). It signs in to **your own Telegram account** (TDLib) and stores everything in a private channel:
 
-- Original-quality backups (HEIC/HEVC, Live Photo pairs, filenames, dates and locations kept) with SHA-256 de-duplication
-- Background uploads, overnight catch-up and Shortcuts automations ("Back Up New Photos" runs without opening the app)
-- An **encrypted, pinned cloud index**, so the whole gallery comes back after a reinstall
-- Optional end-to-end encryption, a Google-Photos-style timeline, and a safe "Free Up Space" (off by default)
+- Bit-for-bit originals, including 4K/HDR/Dolby Vision/ProRes video and Live Photos. Files of any size are supported (split above 2/4 GB).
+- Videos stream instantly with seeking, Picture in Picture and AirPlay.
+- Reinstall or switch phones: sign in and the library comes back from the channel itself.
+- Optional end-to-end encryption, Albums, a Google-Photos-style timeline, Shortcuts automations, and a safe "Free Up Space" (off by default).
 
-Setup, installation with Sideloadly/AltStore, and limits are covered in **[ios/README.md](ios/README.md)**. The plan for large files (up to 2 GB) is in [ios/ROADMAP-v2.md](ios/ROADMAP-v2.md). Unsigned `.ipa` builds are on the [Releases](https://github.com/shahil-kv/CloudGallery/releases) page.
+Setup and installation (SideStore / AltStore / Sideloadly) are in **[ios/README.md](ios/README.md)**. The design is documented in [docs/](docs/): [architecture](docs/ARCHITECTURE.md), [cloud format](docs/CLOUD_FORMAT.md), [upstream issues analysis](docs/ISSUES-ANALYSIS.md). Unsigned `.ipa` builds are on the [Releases](https://github.com/shahil-kv/CloudGallery/releases) page.
+
+![iOS timeline (screenshot placeholder)](docs/screenshots/ios-timeline.png)
 
 The iOS app is based on the original projects **[AKS-Labs/CloudGallery](https://github.com/AKS-Labs/CloudGallery)** (Android) and **[Whitehole](https://github.com/beradeep/whitehole/)**, and is licensed under the same **GPL-3.0**.
 

@@ -2,11 +2,8 @@ name: TDLib for Android
 
 # Builds the official TDLib Java/JNI bindings for Android from source (tdlib/td example/android
 # Dockerfile) at the commit pinned in android/tdlib.version, and publishes tdlib.zip as a release
-# asset that the Android build downloads. Runs only when the pinned version changes.
+# asset that the Android build downloads. Manual only while Android work is paused.
 on:
-  push:
-    branches: [main]
-    paths: ["android/tdlib.version", ".github/workflows/tdlib-android.yml"]
   workflow_dispatch:
 
 permissions:
