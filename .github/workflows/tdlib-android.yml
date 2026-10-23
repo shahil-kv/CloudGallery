@@ -1,0 +1,58 @@
+name: TDLib for Android
+
+# Builds the official TDLib Java/JNI bindings for Android from source (tdlib/td example/android
+# Dockerfile) at the commit pinned in android/tdlib.version, and publishes tdlib.zip as a release
+# asset that the Android build downloads. Runs only when the pinned version changes.
+on:
+  push:
+    branches: [main]
+    paths: ["android/tdlib.version", ".github/workflows/tdlib-android.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Read pinned TDLib commit
+        id: v
+        run: |
+          COMMIT=$(tr -d '[:space:]' < android/tdlib.version)
+          echo "commit=$COMMIT" >> "$GITHUB_OUTPUT"
+          echo "tag=tdlib-android-${COMMIT:0:8}" >> "$GITHUB_OUTPUT"
+
+      - name: Skip if already published
+        id: exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "${{ steps.v.outputs.tag }}" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build TDLib (Docker, official recipe)
+        if: steps.exists.outputs.found == 'false'
+        run: |
+          git clone --depth 1 https://github.com/tdlib/td.git upstream-td
+          cd upstream-td/example/android
+          docker build --build-arg COMMIT_HASH=${{ steps.v.outputs.commit }} --output tdlib .
+          ls -la tdlib
+          cp tdlib/tdlib.zip "$GITHUB_WORKSPACE/tdlib.zip"
+          unzip -l "$GITHUB_WORKSPACE/tdlib.zip" | head -40
+
+      - name: Publish
+        if: steps.exists.outputs.found == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.v.outputs.tag }}" tdlib.zip \
+            --repo "$GITHUB_REPOSITORY" --prerelease \
+            --title "TDLib for Android ${{ steps.v.outputs.commit }}" \
+            --notes "Official TDLib (tdlib/td@${{ steps.v.outputs.commit }}) built for Android with example/android/Dockerfile. Used by the Android app build; not an app release."
